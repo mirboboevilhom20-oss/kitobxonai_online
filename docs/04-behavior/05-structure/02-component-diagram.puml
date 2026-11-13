@@ -1,0 +1,61 @@
+
+@startuml
+title Диаграммаи компонентҳои китобхонаи онлайн
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam linetype ortho
+
+actor "Хонанда" as Reader
+actor "Администратор" as Admin
+
+package "Қисми истифодабаранда (Frontend)" {
+    [Саҳифаи асосӣ] as Home
+    [Каталоги китобҳо] as Catalog
+    [Сабти ном ва воридшавӣ] as AuthUI
+    [Профили шахсӣ] as Profile
+    [Панели администратор] as AdminPanel
+}
+
+package "Қисми серверӣ (Backend)" {
+    [API] as API
+    [Модули авторизатсия] as Auth
+    [Модули идоракунии китобҳо] as BookService
+    [Модули категорияҳо] as CategoryService
+    [Модули дӯстдоштаҳо] as FavoriteService
+    [Модули истифодабарандагон] as UserService
+}
+
+database "Пойгоҳи додаҳо" as DB
+folder "Анбори файлҳои электронӣ" as Storage
+
+Reader --> Home
+Reader --> Catalog
+Reader --> AuthUI
+Reader --> Profile
+
+Admin --> AuthUI
+Admin --> AdminPanel
+
+Home --> API
+Catalog --> API
+AuthUI --> API
+Profile --> API
+AdminPanel --> API
+
+API --> Auth
+API --> BookService
+API --> CategoryService
+API --> FavoriteService
+API --> UserService
+
+Auth --> DB
+BookService --> DB
+CategoryService --> DB
+FavoriteService --> DB
+UserService --> DB
+
+BookService --> Storage : гирифтани файл
+Catalog --> API : ҷустуҷӯ ва филтр
+
+@enduml
