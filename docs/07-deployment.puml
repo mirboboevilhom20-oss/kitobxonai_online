@@ -1,0 +1,57 @@
+
+@startuml
+title Диаграммаи ҷойгиркунии системаи «Китобхонаи онлайн»
+
+skinparam shadowing false
+skinparam linetype ortho
+skinparam componentStyle rectangle
+
+node "Дастгоҳи истифодабаранда" as Client {
+    artifact "Веб-браузер" as Browser
+    artifact "Интерфейси китобхона" as Frontend
+}
+
+node "Сервери веб" as WebServer {
+    component "Frontend Application" as WebApp
+    component "Backend API" as Backend
+    component "Модули авторизатсия" as Auth
+    component "Модули китобҳо" as BookService
+}
+
+node "Сервери пойгоҳи додаҳо" as DatabaseServer {
+    database "Online Library Database" as DB
+}
+
+node "Анбори файлҳо" as FileServer {
+    folder "Файлҳои китобҳои электронӣ" as Books
+    folder "Муқоваҳои китобҳо" as Covers
+}
+
+Browser --> Frontend : HTTP / HTTPS
+Frontend --> WebApp : HTTPS
+WebApp --> Backend : REST API
+Backend --> Auth : Санҷиши дастрасӣ
+Backend --> BookService : Идоракунии китобҳо
+
+Auth --> DB : SQL
+BookService --> DB : SQL
+BookService --> Books : Гирифтани файли китоб
+BookService --> Covers : Гирифтани муқова
+
+note right of DB
+  Ҷадвалҳои пойгоҳи додаҳо:
+  - users
+  - books
+  - authors
+  - categories
+  - book_authors
+  - favorites
+end note
+
+note bottom of Client
+  Истифодабаранда метавонад
+  аз телефон ё компютер
+  ба китобхона дастрасӣ дошта бошад.
+end note
+
+@enduml
