@@ -1,0 +1,81 @@
+
+@startuml
+title Диаграммаи ER — Китобхонаи онлайн
+
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam entity {
+    BackgroundColor #EAF2F8
+    BorderColor #2874A6
+}
+
+entity "users" as users {
+    * id : INT <<PK>>
+    --
+    first_name : VARCHAR(100)
+    last_name : VARCHAR(100)
+    email : VARCHAR(255) <<UNIQUE>>
+    password : VARCHAR(255)
+    role : VARCHAR(20)
+    created_at : DATETIME
+}
+
+entity "books" as books {
+    * id : INT <<PK>>
+    --
+    title : VARCHAR(255)
+    description : TEXT
+    publish_year : INT
+    cover_image : VARCHAR(255)
+    file_path : VARCHAR(255)
+    category_id : INT <<FK>>
+    created_at : DATETIME
+}
+
+entity "authors" as authors {
+    * id : INT <<PK>>
+    --
+    full_name : VARCHAR(255)
+    biography : TEXT
+}
+
+entity "categories" as categories {
+    * id : INT <<PK>>
+    --
+    name : VARCHAR(150)
+    description : TEXT
+}
+
+entity "book_authors" as book_authors {
+    * book_id : INT <<PK, FK>>
+    * author_id : INT <<PK, FK>>
+}
+
+entity "favorites" as favorites {
+    * id : INT <<PK>>
+    --
+    user_id : INT <<FK>>
+    book_id : INT <<FK>>
+    created_at : DATETIME
+}
+
+categories ||--o{ books : гурӯҳбандӣ
+books ||--o{ book_authors : муаллифон
+authors ||--o{ book_authors : китобҳо
+
+users ||--o{ favorites : дӯстдоштаҳо
+books ||--o{ favorites : интихобҳо
+
+note bottom of users
+  Ҳар истифодабаранда
+  нақши муайян дорад:
+  хонанда ё администратор.
+end note
+
+note bottom of books
+  file_path роҳи файли
+  электронии китоб мебошад.
+end note
+
+@enduml
