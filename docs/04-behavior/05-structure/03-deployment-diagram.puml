@@ -1,0 +1,52 @@
+
+@startuml
+title Диаграммаи ҷойгиркунии системаи китобхонаи онлайн
+
+skinparam shadowing false
+skinparam linetype ortho
+
+node "Дастгоҳи истифодабаранда" as Client {
+    artifact "Браузер" as Browser
+    artifact "Интерфейси веб" as Frontend
+}
+
+node "Сервери веб" as WebServer {
+    artifact "Frontend Application" as WebApp
+    artifact "Backend API" as Backend
+}
+
+node "Сервери пойгоҳи додаҳо" as DatabaseServer {
+    database "Online Library DB" as DB
+}
+
+node "Сервери нигоҳдории файлҳо" as FileServer {
+    folder "Китобҳои электронӣ" as Books
+    folder "Муқоваҳои китобҳо" as Covers
+}
+
+Browser --> Frontend : HTTP / HTTPS
+Frontend --> WebApp : HTTPS
+WebApp --> Backend : REST API / HTTPS
+Backend --> DB : SQL / TCP
+Backend --> Books : хондан ва гирифтани файл
+Backend --> Covers : гирифтани муқова
+
+note right of Backend
+  Коркарди дархостҳо:
+  - Авторизатсия
+  - Ҷустуҷӯи китобҳо
+  - Идоракунии китобҳо
+  - Идоракунии дӯстдоштаҳо
+end note
+
+note right of DB
+  Ҷадвалҳои асосӣ:
+  - users
+  - books
+  - authors
+  - categories
+  - favorites
+  - book_authors
+end note
+
+@enduml
