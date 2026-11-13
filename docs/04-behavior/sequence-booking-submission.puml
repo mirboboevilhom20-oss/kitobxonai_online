@@ -1,0 +1,52 @@
+
+@startuml
+title Диаграммаи пайдарпайии мутолиаи китоби электронӣ
+
+autonumber
+skinparam shadowing false
+skinparam responseMessageBelowArrow true
+
+actor "Хонанда" as Reader
+boundary "Интерфейси веб" as UI
+control "Системаи китобхона" as System
+database "Пойгоҳи додаҳо" as DB
+collections "Анбори файлҳо" as Storage
+
+Reader -> UI : Кушодани сомона
+UI -> System : Дархости рӯйхати китобҳо
+System -> DB : Гирифтани рӯйхати китобҳо
+DB --> System : Маълумоти китобҳо
+System --> UI : Намоиши китобҳо
+UI --> Reader : Рӯйхати китобҳо
+
+Reader -> UI : Ҷустуҷӯи китоб
+UI -> System : Ирсоли дархости ҷустуҷӯ
+System -> DB : Ҷустуҷӯ аз рӯйи ном ё муаллиф
+DB --> System : Натиҷаҳои ҷустуҷӯ
+System --> UI : Рӯйхати натиҷаҳо
+UI --> Reader : Намоиши натиҷаҳо
+
+Reader -> UI : Интихоби китоб
+UI -> System : Дархости маълумоти китоб
+System -> DB : Гирифтани маълумоти китоб
+DB --> System : Маълумоти муфассал
+System --> UI : Намоиши маълумоти китоб
+UI --> Reader : Маълумоти китоб
+
+Reader -> UI : Интихоби "Мутолиа"
+UI -> System : Дархости кушодани китоб
+System -> DB : Санҷиши мавҷудияти китоб
+DB --> System : Маълумоти файл
+
+alt Файли электронӣ дастрас аст
+    System -> Storage : Дархости файли китоб
+    Storage --> System : Файли электронӣ
+    System --> UI : Ирсоли файл
+    UI --> Reader : Кушодани китоби электронӣ
+    Reader -> UI : Мутолиаи китоб
+else Файл дастрас нест
+    System --> UI : Паёми дастрас набудани китоб
+    UI --> Reader : Намоиши огоҳӣ
+end
+
+@enduml
