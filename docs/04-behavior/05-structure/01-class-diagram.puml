@@ -1,0 +1,95 @@
+
+@startuml
+title Диаграммаи синфҳои китобхонаи онлайн
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+
+class User {
+  - id: int
+  - firstName: string
+  - lastName: string
+  - email: string
+  - password: string
+  - role: string
+  - createdAt: datetime
+  + register()
+  + login()
+  + logout()
+  + updateProfile()
+}
+
+class Book {
+  - id: int
+  - title: string
+  - description: text
+  - publishYear: int
+  - coverImage: string
+  - filePath: string
+  - categoryId: int
+  + getDetails()
+  + search()
+  + openBook()
+}
+
+class Author {
+  - id: int
+  - fullName: string
+  - biography: text
+  + getBooks()
+}
+
+class Category {
+  - id: int
+  - name: string
+  - description: text
+  + getBooks()
+}
+
+class Favorite {
+  - id: int
+  - userId: int
+  - bookId: int
+  - createdAt: datetime
+  + addFavorite()
+  + removeFavorite()
+}
+
+class BookAuthor {
+  - bookId: int
+  - authorId: int
+}
+
+class Admin {
+  + addBook()
+  + editBook()
+  + deleteBook()
+  + manageCategories()
+  + manageUsers()
+}
+
+class Reader {
+  + searchBooks()
+  + viewBook()
+  + readBook()
+  + addToFavorites()
+}
+
+User <|-- Admin
+User <|-- Reader
+
+Category "1" -- "0..*" Book : гурӯҳбандӣ мекунад
+
+Book "1" -- "0..*" BookAuthor
+Author "1" -- "0..*" BookAuthor
+
+User "1" -- "0..*" Favorite : дӯстдоштаҳо
+Book "1" -- "0..*" Favorite : интихоб мешавад
+
+Admin ..> Book : идора мекунад
+Admin ..> Category : идора мекунад
+Reader ..> Book : мутолиа мекунад
+Reader ..> Favorite : истифода мебарад
+
+@enduml
