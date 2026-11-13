@@ -1,0 +1,61 @@
+
+@startuml
+title Диаграммаи ҳолатҳои истифодаи китобхонаи онлайн
+
+left to right direction
+
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam actorStyle awesome
+
+actor "Меҳмон" as Guest
+actor "Хонанда" as Reader
+actor "Администратор" as Admin
+
+rectangle "Системаи китобхонаи онлайн" {
+
+  usecase "Дидани китобҳо" as UC1
+  usecase "Ҷустуҷӯи китоб" as UC2
+  usecase "Дидани маълумоти китоб" as UC3
+  usecase "Сабти ном" as UC4
+  usecase "Ворид шудан" as UC5
+
+  usecase "Идоракунии профил" as UC6
+  usecase "Илова ба дӯстдоштаҳо" as UC7
+  usecase "Дидани дӯстдоштаҳо" as UC8
+  usecase "Мутолиаи китоби электронӣ" as UC9
+
+  usecase "Илова кардани китоб" as UC10
+  usecase "Таҳрири китоб" as UC11
+  usecase "Нест кардани китоб" as UC12
+  usecase "Идоракунии категорияҳо" as UC13
+  usecase "Идоракунии хонандагон" as UC14
+}
+
+Guest --> UC1
+Guest --> UC2
+Guest --> UC3
+Guest --> UC4
+Guest --> UC5
+
+Reader --> UC1
+Reader --> UC2
+Reader --> UC3
+Reader --> UC5
+Reader --> UC6
+Reader --> UC7
+Reader --> UC8
+Reader --> UC9
+
+Admin --> UC5
+Admin --> UC10
+Admin --> UC11
+Admin --> UC12
+Admin --> UC13
+Admin --> UC14
+
+UC7 .> UC5 : <<include>>
+UC8 .> UC5 : <<include>>
+UC9 .> UC5 : <<include>>
+
+@enduml
